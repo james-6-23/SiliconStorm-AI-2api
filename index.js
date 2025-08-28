@@ -3,9 +3,14 @@ const SILICONSTORM_CREATE_CHAT_URL = "https://api.siliconstorm.ai/aigc/chat/crea
 
 const conversationIdCache = new Map<string, string>();
 
+interface OpenAIMessage {
+  role: string;
+  content: string;
+}
+
 interface OpenAIRequest {
   model: string;
-  messages: Array<{role: string; content: string}>;
+  messages: OpenAIMessage[];
   stream?: boolean;
   temperature?: number;
   max_tokens?: number;
@@ -14,11 +19,16 @@ interface OpenAIRequest {
   presence_penalty?: number;
 }
 
+interface SiliconStormMessage {
+  role: string;
+  message: string;
+}
+
 interface SiliconStormRequest {
   chatId: string;
   conversationId: string;
   appId: null;
-  messages: Array<{role: string; message: string}>;
+  messages: SiliconStormMessage[];
   modelId: string;
   model: string;
   modelProvider: string;
@@ -28,8 +38,9 @@ interface SiliconStormRequest {
   topK: number;
   frequencyPenalty: number;
   type: number;
-  knowledgeIds: Array<any>;
+  knowledgeIds: any[];
 }
+
 
 interface CreateChatRequest {
   type: number;
